@@ -1,0 +1,18 @@
+<div class="card" style="width: 100%;">
+    <div class="card-body">
+      <p class="card-text">{{ prod.Campaning_Name }}</p>
+      {% if prod.Status == "stop" %}
+        <h5 class="card-title">Status : <p class="text-danger">{{ prod.Status }}</p> </h5>
+      {% elif prod.Status == "start" %}
+      <h5 class="card-title">Status : <p class="text-success">{{ prod.Status }}</p> </h5>
+      {% elif prod.Status == "pause" %}
+      <h5 class="card-title">Status : <p class="text-secondary">{{ prod.Status }}</p> </h5>
+      {% else %}
+      <h5 class="card-title">Status : <p class="text-info">{{ prod.Status }}</p> </h5>
+        {% endif %}
+      <!-- <button value="{{ prod.id }}" class="stretched-link btn btn_product btn-outline-dark py-2" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Подробнее</button> -->
+        <a href="/{{ prod.id }}/compani" class="stretched-link btn btn-outline-dark py-2">
+        Подробнее
+        </a>
+    </div>
+  </div>

@@ -1,0 +1,152 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"> 
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> 
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script> 
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script> 
+  <script src="https://kit.fontawesome.com/69e2443572.js" crossorigin="anonymous"></script> 
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet"> 
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script> 
+  <script src="https://unpkg.com/axios@1.5.1/dist/axios.min.js" ></script> 
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet"> 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" /> 
+  <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script> 
+  <title>Campaign_KT</title> 
+</head> 
+<body> 
+  <body class="text-center justify-content-center"> 
+ 
+    <div id="vue"> 
+    <nav class="navbar navbar-expand-lg " style="height: 70px;background: linear-gradient(118.18deg, #2992e0 -7.25%, #1dbe90 99.98%);"> 
+      <div class="container-fluid"> 
+        <div class="collapse navbar-collapse" id="navbarSupportedContent"> 
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0"> 
+            <img class="" src="{{ url_for('static', filename='img/telecom.svg') }}" width="120"> 
+          </ul> 
+          <div class="d-flex"> 
+            <ul class="navbar-nav"> 
+              <li class="nav-item" > 
+                <a class="navbar-brand text-light" href="/">Кампании</a> 
+              </li> 
+              <li class="nav-item"> 
+                  <a class="navbar-brand text-light" href="/settings">Настройки</a> 
+                </li>
+              <li class="nav-item"> 
+                <a class="navbar-brand text-light" href="/logout">Выход</a> 
+              </li> 
+            </ul> 
+          </div> 
+        </div> 
+      </div> 
+    </nav> 
+ 
+
+
+
+<div class="container justify-content-center mx-auto mb-5 row pa">
+  
+  <h5 class="py-3">Сводная Информация</h5>
+  <h5 class="py-1">Дата: {{ date }}</h5>
+  <h5 class="py-1">Всего компаний: {{ len }}</h5>
+  <h5 class="py-1">Запущено: {{ status_len }}</h5>
+  <h5 class="py-1">Количество активных звонков: {{ loading_len }}</h5>
+  
+  <div class="row justify-content-center mt-5"> 
+
+    <div class="d-flex justify-content-center row"> 
+ 
+
+<div v-for="data in data_api" class="col-md-3 py-2">
+  <!-- background: linear-gradient(118.18deg, #f2f2f0 -7.25%, #f1f1f1 99.98%);  -->
+  <div class="card" style="width: 100%;"> 
+    <div class="card-body"> 
+      <div v-if="data.Status == 1" style="background: #1dbe90 linear-gradient(118.18deg, #7bda95 -7.25%, #1dbe90 99.98%); height: 100px; padding-top: 40px; border-radius: 15px;">
+      <h5 class="card-title text-light">{ data.Campaign_Caption }</h5> 
+      </div>
+      <div v-if="data.Status == 3 || data.Status == 0 || data.Status == null" style="background: #8C161E linear-gradient(118.18deg, #FA2736 -7.25%, #8C161E 99.98%); height: 100px; padding-top: 40px; border-radius: 15px;">
+        <h5 class="card-title text-light">{ data.Campaign_Caption }</h5> 
+      </div>
+      <div v-if="data.Status == 2" style="background: #D1CDCE linear-gradient(118.18deg, #A19E9E -7.25%, #D1CDCE 99.98%); height: 100px; padding-top: 40px; border-radius: 15px;">
+        <h5 class="card-title text-light">{ data.Campaign_Caption }</h5> 
+      </div>
+      <p class="card-text mt-2 text-start">Дата и время создания: { data.Campaign_Date }</p> 
+      <p class="card-text text-start">Используемые лицензии: { data.License_inUse }</p>
+      <p class="card-text text-start" >Начало звонков : { data.First_Call_Time } </p> 
+      <p class="card-text text-start" >Окончание звонков : { data.Last_Call_Time } </p>  
+        <a v-if="data.Status == 3 || data.Status == 0 || data.Status == null" :href="url + '/' + data.Campaign_Name  + '/compani/'" style="background: #8C161E linear-gradient(118.18deg, #FA2736 -7.25%, #8C161E 99.98%);" class="stretched-link btn py-2 text-light"> 
+        Подробнее 
+      </a> 
+      <a v-if="data.Status == 2" :href="url + '/' + data.Campaign_Name  + '/compani/'" style="background: #D1CDCE linear-gradient(118.18deg, #A19E9E -7.25%, #D1CDCE 99.98%);" class="stretched-link btn py-2 text-light"> 
+        Подробнее 
+      </a> 
+      <a v-if="data.Status == 1" :href="url + '/' + data.Campaign_Name  + '/compani/'" style="background: #1dbe90 linear-gradient(118.18deg, #7bda95 -7.25%, #1dbe90 99.98%);" class="stretched-link btn py-2 text-light"> 
+        Подробнее 
+      </a> 
+    </div> 
+  </div> 
+</div> 
+    </div> 
+ 
+  </div> 
+</div> 
+</div> 
+ 
+<footer class="py-3 my-4"> 
+  <p class="text-center text-body-secondary">© 2023 EvoTECH Центральная Азия 
+    Version 4.0</p> 
+</footer> 
+ 
+<script type="text/javascript"> 
+  var app = new Vue({ 
+    el: '#vue', 
+    data: { 
+      data_api: [], 
+      url:  window.location.origin, 
+      seen: true, 
+      search_com: null, 
+    }, 
+    created: function() { 
+      axios.get(this.url + '/api_comapni/', { 
+          headers: { 
+            'Access-Control-Allow-Origin':'*' 
+          }, 
+          responseType: 'json', 
+        }).then((response) => { 
+          this.data_api = response.data
+        });      
+
+    },
+    delimiters: ['{', '}'],
+  })
+
+</script>
+
+
+</body>
+</html>
+
+
+
+  
+
+<!-- <script>
+  const getProductInfo = async url => {
+	const response = await fetch(url); // getting response from api
+	const data = await response.json(); // getting from json data
+
+	const phoneInfo = data[0];
+	const phoneImages = data[1]; // to get (cover) you need use map/foreach and use element.cover
+
+	return {
+		phoneInfo,
+		phoneImages,
+	};
+};
+
+getProductInfo('http://127.0.0.1:8001/cat/1').then(({phoneInfo, phoneImages}) => {
+   console.log(phoneInfo, phoneImages[0])
+})
+</script> -->

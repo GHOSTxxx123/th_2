@@ -1,0 +1,23 @@
+<div class="" style="border-radius: 15px; padding-top: 10px; padding-bottom: 10px; background: linear-gradient(118.18deg, #2992e0 -7.25%, #1dbe90 99.98%);">
+    {% if data[0].Status == 0  %}
+    <h5 class="card-title mt-1">Статус : <span style="color: red;">Остановлен</span></h5>
+    {% elif data[0].Status == 1  %}
+    <h5 class="card-title mt-1">Статус : <span style="color: green;">Запущен</span></h5>
+    {% elif data[0].Status == 2  %}
+    <h5 class="card-title mt-1">Статус : <span style="color: gray;">На паузе</span></h5>
+    {% else %}
+    <h5 class="card-title mt-1">Статус : <span style="color: red;">Приостонволен</span></h5>
+    {% endif %}
+    <hr>
+    <h5 class="card-title mt-1">Прогресс : {{data[0].Collection_Pointer}} / {{data[0].Buffer_Pointer}}</h5>
+    <hr>
+    <h5 class="card-title mt-1">Попытки : {{data[0].Attempts}}</h5>
+    <hr>
+    <h5 class="card-title mt-1">Лицензия : {{data[0].License_inUse}}</h5>
+    <hr>
+    <h5 class="card-title mt-1">Начало звонков : {{data[0].First_Call_Time}}</h5>
+    <hr>
+    <h5 class="card-title mt-1">Окончание звонков : {{data[0].Last_Call_Time}}</h5>
+    <hr>
+    <h5 class="card-title mt-1">Дата загрузки списка : {{data[0].Campaign_Date}}</h5>
+</div>
