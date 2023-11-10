@@ -6,7 +6,7 @@
     {% elif data[0].Status == 2  %}
     <h5 class="card-title mt-1">Статус : <span style="color: gray;">На паузе</span></h5>
     {% else %}
-    <h5 class="card-title mt-1">Статус : <span style="color: red;">Приостонволен</span></h5>
+    <h5 class="card-title mt-1">Статус : <span style="color: red;">Приостановлено</span></h5>
     {% endif %}
     <hr>
     <h5 class="card-title mt-1">Прогресс : {{data[0].Collection_Pointer}} / {{data[0].Buffer_Pointer}}</h5>

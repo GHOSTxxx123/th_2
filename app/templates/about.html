@@ -50,15 +50,28 @@
   
   <h5 class="py-3">Сводная Информация</h5>
   <h5 class="py-1">Дата: {{ date }}</h5>
-  <h5 class="py-1">Всего компаний: {{ len }}</h5>
+  <h5 class="py-1">Всего Кампаний: {{ len }}</h5>
   <h5 class="py-1">Запущено: {{ status_len }}</h5>
   <h5 class="py-1">Количество активных звонков: {{ loading_len }}</h5>
   
-  <div class="row justify-content-center mt-5"> 
+  <div class="justify-content-center">
+    <button type="button" @click="cardFunck" style="padding-right: 10px;" class="btn mb-1 mt-1 btn-dark btn-lg px-4 me-md-2">
+      <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-card-heading" viewBox="0 0 16 16">
+        <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+        <path d="M3 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0-5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-1z"/>
+      </svg>
+    </button>
+    <button type="button" @click="listFunck" style="padding-right: 10px;" class="btn mb-1 mt-1 btn-dark btn-lg px-4 me-md-2">
+      <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-list-ul" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+      </svg>
+    </button>
+  </div>
 
-    <div class="d-flex justify-content-center row"> 
- 
+  <div style="display: block;" id="card" class="row justify-content-center mt-5"> 
 
+
+<div class="d-flex justify-content-center row mt-3"> 
 <div v-for="data in data_api" class="col-md-3 py-2">
   <!-- background: linear-gradient(118.18deg, #f2f2f0 -7.25%, #f1f1f1 99.98%);  -->
   <div class="card" style="width: 100%;"> 
@@ -87,12 +100,45 @@
       </a> 
     </div> 
   </div> 
+</div>
 </div> 
+</div>
+
+
+<div style="display: none;" id="list" class="row justify-content-center mt-5"> 
+
+
+  <div class="d-flex justify-content-center row mt-3">
+
+<div class="col-lx-3 py-2 fs-5">
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Наименование кампании</th>
+      <th scope="col">Количество записей</th>
+      <th scope="col">Время начало звонков</th>
+      <th scope="col">Время окончание звонков</th>
+      <th scope="col">Статус</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr v-for="data in data_api">
+      <a href="/" ><th scope="row">{ data.Campaign_Caption }</th></a>
+      <th>{ data.Buffer_Pointer }</th>
+      <td>{ data.First_Call_Time }</td>
+      <td>{ data.Last_Call_Time }</td>
+      <td v-if="data.Status == 3 || data.Status == 0 || data.Status == null" class="text-danger" > Остановлен </td>
+      <td v-if="data.Status == 2" class="text-primary" >На паузе</td>
+      <td v-if="data.Status == 1" class="text-success">Запущен</td>
+    </tr>
+  </tbody>
+</table>
+</div>
     </div> 
  
   </div> 
-</div> 
-</div> 
+ 
  
 <footer class="py-3 my-4"> 
   <p class="text-center text-body-secondary">© 2023 EvoTECH Центральная Азия 
@@ -120,6 +166,20 @@
 
     },
     delimiters: ['{', '}'],
+    methods: {
+      cardFunck() {
+          var card = document.getElementById('card')
+          var list = document.getElementById('list')
+          list.style.display = 'none'
+          card.style.display = 'block'
+      },
+      listFunck() {
+          var card = document.getElementById('card')
+          var list = document.getElementById('list')
+          list.style.display = 'block'
+          card.style.display = 'none'
+      }
+    },
   })
 
 </script>

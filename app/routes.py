@@ -47,12 +47,6 @@ def sign_up():
 @login_required
 def about(): 
     cursor = db_2.cursor()
-    cursor.execute("SELECT * FROM Campaign_KT.OPERATION;")
-    row_headers=[x[0] for x in cursor.description]
-    records = cursor.fetchall()
-    json_data=[]
-    for result in records:
-        json_data.append(dict(zip(row_headers,result)))
     
     cursor.execute("SELECT * FROM Campaign_KT.OPERATION WHERE Status = %s;" %(1))
 
@@ -67,7 +61,6 @@ def about():
     for i in records:
         if i[0] != 0:
             sym += int(i[0])
-            print(i[0])
 
     return render_template('about.html', is_admin=False, logout=True, status_len=len(status_len), loading_len=sym, len=len(records), date=datetime.today().strftime('%Y-%m-%d'))
     # else:
@@ -174,11 +167,7 @@ def upload_exls(id):
 def chats(id):
 
     # f'{ip_addres}'
-    db = mysql.connector.connect(host='localhost',
-                        user='campkt',
-                        passwd='Jrnz,hm03',
-                        db="Campaign_KT")
-    cursor = db.cursor()
+    cursor = db_2.cursor()
     # cursor.execute('''INSERT INTO Campaign_KT.CALLS_BUFFER (Extension, Calls_Limit) VALUES ('101', 1);''')
     # db.commit()
     cursor.execute("SELECT * FROM Campaign_KT.OPERATION WHERE Campaign_Caption = '%s';" %(id))

@@ -4,6 +4,9 @@ from flask_login import LoginManager
 from flask_migrate import Migrate
 import mysql.connector
 import os
+import socket
+
+ip_addres = socket.gethostbyname(socket.gethostname())
 
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -19,11 +22,20 @@ app.config['JSON_AS_ASCII'] = False
 
 db_1 = SQLAlchemy(app)
 
-db_2 = mysql.connector.connect(host=f'localhost',
-                        user='campkt',
-                        passwd='Jrnz,hm03',
-                        db="Campaign_KT",#)
-                        ssl_disabled=True)
+try :
+    db_2 = mysql.connector.connect(host=f'localhost',
+                user='campkt',
+                passwd='Jrnz,hm03',
+                db="Campaign_KT")#)
+                #ssl_disabled=True)
+except:
+    db_2 = mysql.connector.connect(host=f'{ip_addres}',
+                user='campkt',
+                passwd='Jrnz,hm03',
+                db="Campaign_KT")#)
+                #ssl_disabled=True)
+
+
 migrate = Migrate(app, db_1)
 
 login_manager = LoginManager(app)

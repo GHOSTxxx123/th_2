@@ -7,7 +7,7 @@ from app.model import Compani, User
 
 
 class Sign_in(FlaskForm):
-    user = StringField('Login', validators=[DataRequired(),
+    user = StringField('Логин', validators=[DataRequired(),
                                              Length(min=2, max=100)])
     password = PasswordField('Пароль', validators=[DataRequired(),
                                              Length(min=8, max=100)])
@@ -16,12 +16,12 @@ class Sign_in(FlaskForm):
 
 
 class Sign_up(FlaskForm):
-    user = StringField('Login', validators=[DataRequired(),
+    user = StringField('Логин', validators=[DataRequired(),
                                              Length(min=2, max=100)])                                        
     password = PasswordField('Пароль', validators=[DataRequired(),
                                              Length(min=8, max=100)])                                                                               
 
-    submit = SubmitField('Авторизация')                                             
+    submit = SubmitField('Регистрация')                                             
     
     def validate_gmail(self, name):
         name = User.query.filter_by(user_name=name.data).first()
