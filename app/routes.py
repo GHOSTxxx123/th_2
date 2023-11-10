@@ -316,13 +316,14 @@ def edit(compani_id):
     # elif not current_user.is_admin:
     #     return abort(404)
 
-def sip_update(sip_id, time, r):
+def sip_update(sip_id, s_ip, time, r):
     cursor = db_2.cursor()
 
     sip_ip = ['asterisk1.telecom.kz', 'asterisk2.telecom.kz']
     sip_server = ['10.165.0.14', '10.165.0.15']
+    server_ip = ['10.165.0.2', '10.165.0.6']
 
-    cursor.execute("UPDATE Campaign_KT.Settings SET SIP_Server = %s, SIP_Trunk = %s, TIME_Out = %s;", (sip_server[int(sip_id)], sip_ip[int(sip_id)], str(time)))
+    cursor.execute("UPDATE Campaign_KT.Settings SET SIP_Server = %s, Sip_Ip = %s, SIP_Trunk = %s, TIME_Out = %s;", (sip_server[int(sip_id)], server_ip[int(s_ip)], sip_ip[int(sip_id)], str(time)))
     db_2.commit()
 
     if r is None:
@@ -331,13 +332,14 @@ def sip_update(sip_id, time, r):
         cursor.execute(f"UPDATE Campaign_KT.Settings SET Engine = %s;" %(int(request.form['Radio'])))
         db_2.commit()
 
-def sip_insert(sip_id, time, r):
+def sip_insert(sip_id, s_ip, time, r):
     cursor = db_2.cursor()
 
     sip_ip = ['asterisk1.telecom.kz', 'asterisk2.telecom.kz']
     sip_server = ['10.165.0.14', '10.165.0.15']
+    server_ip = ['10.165.0.2', '10.165.0.6']
 
-    cursor.execute("INSERT INTO Campaign_KT.Settings (SIP_Server, SIP_Trunk, Time_Out) VALUES (?, ?, ?);"  %(sip_server[int(sip_id)], sip_ip[int(sip_id)], str(time)))
+    cursor.execute("INSERT INTO Campaign_KT.Settings (SIP_Server, SIP_Trunk, Time_Out, Sip_Ip) VALUES (?, ?, ?, ?);"  %(sip_server[int(sip_id)], sip_ip[int(sip_id)], str(time), server_ip[int(s_ip)]))
     db_2.commit()
     if r is None:
         ...
@@ -361,19 +363,19 @@ def settings():
         if records is None :
 
             if request.form['Radio']:
-                sip_update(form.sip_server.data, form.time_out.data, None)
+                sip_insert(form.sip_server.data, form.server_ip.data, form.time_out.data, None)
 
                 return redirect(url_for('about'))
         
         else:
             
             try:
-                sip_update(form.sip_server.data, form.time_out.data, request.form['Radio'])
+                sip_update(form.sip_server.data, form.server_ip.data, form.time_out.data, request.form['Radio'])
 
                 return redirect(url_for('about'))
 
             except:
-                sip_update(form.sip_server.data, form.time_out.data, None)
+                sip_update(form.sip_server.data, form.server_ip.data, form.time_out.data, None)
 
                 return redirect(url_for('about'))
 
@@ -389,6 +391,7 @@ def settings():
         if records is None:
             ...
         else:
+            # form.server_ip.data = int(records[6])
             form.time_out.data = int(records[4])
     
         return render_template('settings.html', form=form)

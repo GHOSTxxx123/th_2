@@ -87,7 +87,16 @@
                             <span class="text-danger">{{ error }}</span></br>
                         {% endfor %}
                     {% endif %}
-                </div>  
+                </div>
+                <div class="form-group">
+                  {{ form.server_ip.label(class="form-control-label py-2 mt-2") }}
+                  {{ form.server_ip(class="form-control m-auto") }}
+                  {% if form.server_ip.errors %}
+                      {% for error in form.server_ip.errors %}
+                          <span class="text-danger">{{ error }}</span></br>
+                      {% endfor %}
+                  {% endif %}
+              </div>  
                 <div class="form-group">
                     {{ form.time_out.label(class="form-control-label py-2") }}
                     {% if form.time_out.errors %}

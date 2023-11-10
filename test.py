@@ -24,6 +24,10 @@ cursor = db.cursor()     # get the cursor
 # cursor.execute("UPDATE Campaign_KT.Settings SET SIP_Server = %s, SIP_Trunk = %s, TIME_Out = %s;", ('10.165.0.14', 'asterisk1.telecom.kz', '10'))
 # db.commit()
 
+# cursor.execute("ALTER TABLE Settings ADD Sip_Ip varchar(20);")
+# db.commit()
+
+
 cursor.execute("SELECT * FROM Settings;")
 
 records = cursor.fetchall()

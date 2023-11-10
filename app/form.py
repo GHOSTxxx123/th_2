@@ -81,6 +81,8 @@ class Settings(FlaskForm):
 
     sip_server = SelectField('SIP Server', choices=[('0', 'Сервер 1'), ('1', 'Сервер 2')])
 
+    server_ip = SelectField('Server IP', choices=[('0', 'Главный'), ('1', 'Резервный')])
+
     time_out = IntegerField('Тайм аут в секундах', validators=[DataRequired(),
                                                     NumberRange(min=5, max=30)])
 
