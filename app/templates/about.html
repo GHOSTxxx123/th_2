@@ -1,196 +1,221 @@
-<!DOCTYPE html> 
-<html lang="en"> 
-<head> 
-  <meta charset="UTF-8"> 
-  <meta name="viewport" content="width=device-width, initial-scale=1"> 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"> 
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> 
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script> 
-  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script> 
-  <script src="https://kit.fontawesome.com/69e2443572.js" crossorigin="anonymous"></script> 
-  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet"> 
-  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script> 
-  <script src="https://unpkg.com/axios@1.5.1/dist/axios.min.js" ></script> 
-  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet"> 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" /> 
-  <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script> 
-  <title>Campaign_KT</title> 
-</head> 
-<body> 
-  <body class="text-center justify-content-center"> 
- 
-    <div id="vue"> 
-    <nav class="navbar navbar-expand-lg " style="height: 70px;background: linear-gradient(118.18deg, #2992e0 -7.25%, #1dbe90 99.98%);"> 
-      <div class="container-fluid"> 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent"> 
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0"> 
-            <img class="" src="{{ url_for('static', filename='img/telecom.svg') }}" width="120"> 
-          </ul> 
-          <div class="d-flex"> 
-            <ul class="navbar-nav"> 
-              <li class="nav-item" > 
-                <a class="navbar-brand text-light" href="/">Кампании</a> 
-              </li> 
-              <li class="nav-item"> 
-                  <a class="navbar-brand text-light" href="/settings">Настройки</a> 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://kit.fontawesome.com/69e2443572.js" crossorigin="anonymous"></script>
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script src="https://unpkg.com/axios@1.5.1/dist/axios.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+  <title>Campaign_KT</title>
+</head>
+
+<body>
+
+  <body class="text-center justify-content-center">
+
+    <div id="vue">
+      <nav class="navbar navbar-expand-lg "
+        style="height: 70px;background: linear-gradient(118.18deg, #2992e0 -7.25%, #1dbe90 99.98%);">
+        <div class="container-fluid">
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <img class="" src="{{ url_for('static', filename='img/telecom.svg') }}" width="120">
+            </ul>
+            <div class="d-flex">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="navbar-brand text-light" href="/">Кампании</a>
                 </li>
-              <li class="nav-item"> 
-                <a class="navbar-brand text-light" href="/logout">Выход</a> 
-              </li> 
-            </ul> 
-          </div> 
-        </div> 
-      </div> 
-    </nav> 
- 
+                <li class="nav-item">
+                  <a class="navbar-brand text-light" href="/settings">Настройки</a>
+                </li>
+                <li class="nav-item">
+                  <a class="navbar-brand text-light" href="/logout">Выход</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
 
 
 
-<div class="container justify-content-center mx-auto mb-5 row pa">
-  
-  <h5 class="py-3">Сводная Информация</h5>
-  <h5 class="py-1">Дата: {{ date }}</h5>
-  <h5 class="py-1">Всего Кампаний: {{ len }}</h5>
-  <h5 class="py-1">Запущено: {{ status_len }}</h5>
-  <h5 class="py-1">Количество активных звонков: {{ loading_len }}</h5>
-  
-  <div class="justify-content-center">
-    <button type="button" @click="cardFunck" style="padding-right: 10px;" class="btn mb-1 mt-1 btn-dark btn-lg px-4 me-md-2">
-      <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-card-heading" viewBox="0 0 16 16">
-        <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
-        <path d="M3 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0-5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-1z"/>
-      </svg>
-    </button>
-    <button type="button" @click="listFunck" style="padding-right: 10px;" class="btn mb-1 mt-1 btn-dark btn-lg px-4 me-md-2">
-      <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-list-ul" viewBox="0 0 16 16">
-        <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
-      </svg>
-    </button>
-  </div>
 
-  <div style="display: block;" id="card" class="row justify-content-center mt-5"> 
+      <div class="container justify-content-center mx-auto mb-5 row pa">
 
+        <h5 class="py-3">Сводная Информация</h5>
+        <h5 class="py-1">Дата: {{ date }}</h5>
+        <h5 class="py-1">Всего Кампаний: {{ len }}</h5>
+        <h5 class="py-1">Запущено: {{ status_len }}</h5>
+        <h5 class="py-1">Количество активных звонков: {{ loading_len }}</h5>
 
-<div class="d-flex justify-content-center row mt-3"> 
-<div v-for="data in data_api" class="col-md-3 py-2">
-  <!-- background: linear-gradient(118.18deg, #f2f2f0 -7.25%, #f1f1f1 99.98%);  -->
-  <div class="card" style="width: 100%;"> 
-    <div class="card-body"> 
-      <div v-if="data.Status == 1" style="background: #1dbe90 linear-gradient(118.18deg, #7bda95 -7.25%, #1dbe90 99.98%); height: 100px; padding-top: 40px; border-radius: 15px;">
-      <h5 class="card-title text-light">{ data.Campaign_Caption }</h5> 
-      </div>
-      <div v-if="data.Status == 3 || data.Status == 0 || data.Status == null" style="background: #8C161E linear-gradient(118.18deg, #FA2736 -7.25%, #8C161E 99.98%); height: 100px; padding-top: 40px; border-radius: 15px;">
-        <h5 class="card-title text-light">{ data.Campaign_Caption }</h5> 
-      </div>
-      <div v-if="data.Status == 2" style="background: #D1CDCE linear-gradient(118.18deg, #A19E9E -7.25%, #D1CDCE 99.98%); height: 100px; padding-top: 40px; border-radius: 15px;">
-        <h5 class="card-title text-light">{ data.Campaign_Caption }</h5> 
-      </div>
-      <p class="card-text mt-2 text-start">Дата и время создания: { data.Campaign_Date }</p> 
-      <p class="card-text text-start">Используемые лицензии: { data.License_inUse }</p>
-      <p class="card-text text-start" >Начало звонков : { data.First_Call_Time } </p> 
-      <p class="card-text text-start" >Окончание звонков : { data.Last_Call_Time } </p>  
-        <a v-if="data.Status == 3 || data.Status == 0 || data.Status == null" :href="url + '/' + data.Campaign_Name  + '/compani/'" style="background: #8C161E linear-gradient(118.18deg, #FA2736 -7.25%, #8C161E 99.98%);" class="stretched-link btn py-2 text-light"> 
-        Подробнее 
-      </a> 
-      <a v-if="data.Status == 2" :href="url + '/' + data.Campaign_Name  + '/compani/'" style="background: #D1CDCE linear-gradient(118.18deg, #A19E9E -7.25%, #D1CDCE 99.98%);" class="stretched-link btn py-2 text-light"> 
-        Подробнее 
-      </a> 
-      <a v-if="data.Status == 1" :href="url + '/' + data.Campaign_Name  + '/compani/'" style="background: #1dbe90 linear-gradient(118.18deg, #7bda95 -7.25%, #1dbe90 99.98%);" class="stretched-link btn py-2 text-light"> 
-        Подробнее 
-      </a> 
-    </div> 
-  </div> 
-</div>
-</div> 
-</div>
+        <div class="justify-content-center">
+          <button type="button" @click="cardFunck" style="padding-right: 10px;"
+            class="btn mb-1 mt-1 btn-dark btn-lg px-4 me-md-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor"
+              class="bi bi-card-heading" viewBox="0 0 16 16">
+              <path
+                d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
+              <path
+                d="M3 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0-5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-1z" />
+            </svg>
+          </button>
+          <button type="button" @click="listFunck" style="padding-right: 10px;"
+            class="btn mb-1 mt-1 btn-dark btn-lg px-4 me-md-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-list-ul"
+              viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
+            </svg>
+          </button>
+        </div>
+
+        <div style="display: block;" id="card" class="row justify-content-center mt-5">
 
 
-<div style="display: none;" id="list" class="row justify-content-center mt-5"> 
+          <div class="d-flex justify-content-center row mt-3">
+            <div v-for="data in data_api" class="col-md-3 py-2">
+              <!-- background: linear-gradient(118.18deg, #f2f2f0 -7.25%, #f1f1f1 99.98%);  -->
+              <div class="card" style="width: 100%;">
+                <div class="card-body">
+                  <div v-if="data.Status == 1"
+                    style="background: #1dbe90 linear-gradient(118.18deg, #7bda95 -7.25%, #1dbe90 99.98%); height: 100px; padding-top: 40px; border-radius: 15px;">
+                    <h5 class="card-title text-light">{ data.Campaign_Caption }</h5>
+                  </div>
+                  <div v-if="data.Status == 3 || data.Status == 0 || data.Status == null"
+                    style="background: #8C161E linear-gradient(118.18deg, #FA2736 -7.25%, #8C161E 99.98%); height: 100px; padding-top: 40px; border-radius: 15px;">
+                    <h5 class="card-title text-light">{ data.Campaign_Caption }</h5>
+                  </div>
+                  <div v-if="data.Status == 2"
+                    style="background: #D1CDCE linear-gradient(118.18deg, #A19E9E -7.25%, #D1CDCE 99.98%); height: 100px; padding-top: 40px; border-radius: 15px;">
+                    <h5 class="card-title text-light">{ data.Campaign_Caption }</h5>
+                  </div>
+                  <p class="card-text mt-2 text-start">Дата и время создания: { data.Campaign_Date }</p>
+                  <p class="card-text text-start">Используемые лицензии: { data.License_inUse }</p>
+                  <p class="card-text text-start">Начало звонков : { data.First_Call_Time } </p>
+                  <p class="card-text text-start">Окончание звонков : { data.Last_Call_Time } </p>
+                  <a v-if="data.Status == 3 || data.Status == 0 || data.Status == null"
+                    :href="url + '/' + data.Campaign_Name  + '/compani/'"
+                    style="background: #8C161E linear-gradient(118.18deg, #FA2736 -7.25%, #8C161E 99.98%);"
+                    class="stretched-link btn py-2 text-light">
+                    Подробнее
+                  </a>
+                  <a v-if="data.Status == 2" :href="url + '/' + data.Campaign_Name  + '/compani/'"
+                    style="background: #D1CDCE linear-gradient(118.18deg, #A19E9E -7.25%, #D1CDCE 99.98%);"
+                    class="stretched-link btn py-2 text-light">
+                    Подробнее
+                  </a>
+                  <a v-if="data.Status == 1" :href="url + '/' + data.Campaign_Name  + '/compani/'"
+                    style="background: #1dbe90 linear-gradient(118.18deg, #7bda95 -7.25%, #1dbe90 99.98%);"
+                    class="stretched-link btn py-2 text-light">
+                    Подробнее
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
 
-  <div class="d-flex justify-content-center row mt-3">
-
-<div class="col-lx-3 py-2 fs-5">
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Наименование кампании</th>
-      <th scope="col">Количество записей</th>
-      <th scope="col">Время начало звонков</th>
-      <th scope="col">Время окончание звонков</th>
-      <th scope="col">Статус</th>
-    </tr>
-  </thead>
-  <tbody>
-
-    <tr v-for="data in data_api">
-      <a href="/" ><th scope="row">{ data.Campaign_Caption }</th></a>
-      <th>{ data.Buffer_Pointer }</th>
-      <td>{ data.First_Call_Time }</td>
-      <td>{ data.Last_Call_Time }</td>
-      <td v-if="data.Status == 3 || data.Status == 0 || data.Status == null" class="text-danger" > Остановлен </td>
-      <td v-if="data.Status == 2" class="text-primary" >На паузе</td>
-      <td v-if="data.Status == 1" class="text-success">Запущен</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-    </div> 
- 
-  </div> 
- 
- 
-<footer class="py-3 my-4"> 
-  <p class="text-center text-body-secondary">© 2023 EvoTECH Центральная Азия 
-    Version 4.0</p> 
-</footer> 
- 
-<script type="text/javascript"> 
-  var app = new Vue({ 
-    el: '#vue', 
-    data: { 
-      data_api: [], 
-      url:  window.location.origin, 
-      seen: true, 
-      search_com: null, 
-    }, 
-    created: function() { 
-      axios.get(this.url + '/api_comapni/', { 
-          headers: { 
-            'Access-Control-Allow-Origin':'*' 
-          }, 
-          responseType: 'json', 
-        }).then((response) => { 
-          this.data_api = response.data
-        });      
-
-    },
-    delimiters: ['{', '}'],
-    methods: {
-      cardFunck() {
-          var card = document.getElementById('card')
-          var list = document.getElementById('list')
-          list.style.display = 'none'
-          card.style.display = 'block'
-      },
-      listFunck() {
-          var card = document.getElementById('card')
-          var list = document.getElementById('list')
-          list.style.display = 'block'
-          card.style.display = 'none'
-      }
-    },
-  })
-
-</script>
+        <div style="display: none;" id="list" class="row justify-content-center mt-5">
 
 
-</body>
+          <div class="d-flex justify-content-center row mt-3">
+
+            <div class="col-lx-3 py-2 fs-5">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Наименование кампании</th>
+                    <th scope="col">Количество записей</th>
+                    <th scope="col">Время начала звонков</th>
+                    <th scope="col">Время окончания звонков</th>
+                    <th scope="col">Статус</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <tr v-for="data in data_api">
+                    <th scope="row">{ data.Campaign_Name }</th>
+                    <th><a :href="url + '/' + data.Campaign_Name  + '/compani/'">{ data.Campaign_Caption }</a></th>
+                    <th>{ data.Buffer_Pointer }</th>
+                    <td>{ data.First_Call_Time }</td>
+                    <td>{ data.Last_Call_Time }</td>
+                    <td v-if="data.Status == 3 || data.Status == 0 || data.Status == null" class="text-danger">
+                      Остановлен </td>
+                    <td v-if="data.Status == 2" class="text-primary">На паузе</td>
+                    <td v-if="data.Status == 1" class="text-success">Запущен</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+
+        <footer class="py-3 my-4">
+          <p class="text-center text-body-secondary">© 2023 EvoTECH Центральная Азия
+            Version 4.0</p>
+        </footer>
+
+        <script type="text/javascript">
+          var app = new Vue({
+            el: '#vue',
+            data: {
+              data_api: [],
+              url: window.location.origin,
+              seen: true,
+              search_com: null,
+            },
+            created: function () {
+              axios.get(this.url + '/api_comapni/', {
+                headers: {
+                  'Access-Control-Allow-Origin': '*'
+                },
+                responseType: 'json',
+              }).then((response) => {
+                this.data_api = response.data;
+              });
+
+            },
+            delimiters: ['{', '}'],
+            methods: {
+              cardFunck() {
+                var card = document.getElementById('card');
+                var list = document.getElementById('list');
+                list.style.display = 'none';
+                card.style.display = 'block';
+              },
+              listFunck() {
+                var card = document.getElementById('card');
+                var list = document.getElementById('list');
+                list.style.display = 'block';
+                card.style.display = 'none';
+              }
+            },
+          })
+
+        </script>
+
+
+  </body>
+
 </html>
 
 
 
-  
+
 
 <!-- <script>
   const getProductInfo = async url => {
